@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List Recreate</title>
+
+    <style>
+        .js-todo-display {
+            margin: 10px 0;
+            display: grid;
+            grid-template-columns: 35px 150px 100px 75px;
+            row-gap: 5px;
+            align-items: center;
+        }
+
+        .css-delete-button {
+            background-color: rgb(255, 90, 90);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 5px;
+            cursor: pointer;
+        }
+
+        .css-submit-button {
+            background-color: rgb(57, 240, 81);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <p>Todo List</p>
+    <input class="js-todo-input" placeholder="Add Todo" onkeydown="if(event.key === 'Enter'){addTodo()}">
+    <input type="date" class="js-dueDate-input">
+    <button class="css-submit-button" onclick="addTodo()">Submit</button>
+    <div class="js-todo-display"></div>
+
+    <script>
+        let todoArray = [];
+        let {name, dueDate} = todoArray;
+        let todoInputElem = document.querySelector('.js-todo-input');
+        let todoDueDateElem = document.querySelector('.js-dueDate-input');
+        let todoDisplayElem = document.querySelector('.js-todo-display');
+
+        renderTodo();
+
+        function renderTodo () {
+            let html = '';
+            
+            for (let i = 0; i < todoArray.length; i++) {
+                let name = todoArray[i].name;
+                let dueDate = todoArray[i].dueDate;
+                html = html + `<div>${i+1}</div> <div>${name}</div> <div>${dueDate}</div> <button class="css-delete-button" onclick="deleteTodo(${i})">Delete</button>`;
+            }
+            todoDisplayElem.innerHTML = html;
+        }
+
+        function addTodo () {
+            if (!todoInputElem.value || !todoDueDateElem.value) {
+                alert('to do and due date cannot be empty')
+            } else {
+                todoArray.push({name: todoInputElem.value, dueDate: todoDueDateElem.value});
+                todoInputElem.value = '';
+                console.log(todoArray);
+                renderTodo();
+            }
+        }
+
+        function deleteTodo (i) {
+            todoArray.splice(i,1);
+            renderTodo();
+        }
+
+    </script>
+</body>
+</html>
